@@ -2,10 +2,22 @@ import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import axios from 'axios'
 
-import { Stack, Heading, InformationPanel, SecondaryButton, Pagination } from 'smarthr-ui'
-import { Base as BaseComponent, Table, Head, Row, Cell, Body, LineUp, FaTrashAltIcon, FaEditIcon } from 'smarthr-ui'
+import { Stack, Heading, InformationPanel, SecondaryButton, Pagination, Text } from 'smarthr-ui'
+import {
+  Base as BaseComponent,
+  Table,
+  Head,
+  Row,
+  Cell,
+  Body,
+  LineUp,
+  FaTrashAltIcon,
+  FaEditIcon,
+  FaSearchIcon,
+  FaPlusCircleIcon,
+  Input,
+} from 'smarthr-ui'
 
-import React, { FC, ReactNode } from 'react'
 import { Header } from '../../components/ui/Header'
 import { Footer } from '../../components/ui/Footer'
 import { SpinnerRow } from '../../components/ui/Spinner'
@@ -39,7 +51,36 @@ export const Collection: React.VFC = () => {
           </Stack>
           <Stack>
             <Stack>
+              <LineUp align="space-between" vAlign="center">
+                <Heading type="sectionTitle" tag="h2">
+                  コレクションタイトル
+                </Heading>
+                <SecondaryButton prefix={<FaPlusCircleIcon />}>オブジェクトを追加</SecondaryButton>
+              </LineUp>
+            </Stack>
+            <Stack>
               <Base>
+                <TableHeadNavigation>
+                  <LineUp align="space-between" vAlign="center">
+                    <LineUp gap={0.5}>
+                      <Input prefix={<FaSearchIcon />} />
+                      <SecondaryButton>検索</SecondaryButton>
+                    </LineUp>
+                    <LineUp gap={1} vAlign="center">
+                      <Text>
+                        <strong>152</strong> 件中<strong>1 - 50</strong> 件を表示中
+                      </Text>
+                      <Pagination
+                        current={7}
+                        total={13}
+                        withoutNumbers={true}
+                        onClick={(number) => {
+                          console.log(number)
+                        }}
+                      />
+                    </LineUp>
+                  </LineUp>
+                </TableHeadNavigation>
                 <Table>
                   <Head>
                     <Row>
@@ -120,5 +161,11 @@ const Base = styled(BaseComponent)(
   ({ theme: { space, radius } }) => css`
     border-radius: ${radius.m};
     overflow: hidden;
+  `,
+)
+
+const TableHeadNavigation = styled('nav')(
+  ({ theme: { space } }) => css`
+    padding: ${space(1)} ${space(1.5)};
   `,
 )

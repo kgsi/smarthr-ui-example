@@ -1,25 +1,29 @@
+import { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
+import axios from 'axios'
 
-import { Stack, Heading, TextLink, InformationPanel } from 'smarthr-ui'
-import { Base as BaseComponent, Table, Head, Row, Cell, Body, FaFileIcon } from 'smarthr-ui'
-import { SmartHRLogo } from 'smarthr-ui'
-import { LineUp, Text } from 'smarthr-ui'
+import { Stack, Heading, InformationPanel, SecondaryButton, Pagination } from 'smarthr-ui'
+import { Base as BaseComponent, Table, Head, Row, Cell, Body, LineUp, FaTrashAltIcon, FaEditIcon } from 'smarthr-ui'
+
+import React, { FC, ReactNode } from 'react'
+import { Header } from '../../components/ui/Header'
+import { Footer } from '../../components/ui/Footer'
+import { SpinnerRow } from '../../components/ui/Spinner'
 
 export const Collection: React.VFC = () => {
+  const [posts, setPosts] = useState([])
+  const [isFetching, setIsFetching] = useState<boolean>(false)
+
+  useEffect(() => {
+    setIsFetching(true)
+    axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+      setPosts(res.data)
+      setIsFetching(false)
+    })
+  }, [])
   return (
     <>
-      <StyledHeader>
-        <LineUp align="space-between" vAlign="center">
-          <LineUp vAlign="center" gap={0.5}>
-            <a href="">
-              <SmartHRLogo title="SmartHR" width={150} height={27} fill="#ffffff" />
-            </a>
-          </LineUp>
-          <NavigationItemWrapper>
-            <Text>dummy name</Text>
-          </NavigationItemWrapper>
-        </LineUp>
-      </StyledHeader>
+      <Header />
       <Content fullWidth={true} zIndex={0}>
         <Stack gap={1.5}>
           <Stack>
@@ -34,66 +38,63 @@ export const Collection: React.VFC = () => {
             </InformationPanel>
           </Stack>
           <Stack>
-            <Base>
-              <Table>
-                <Head>
-                  <Row>
-                    <Cell>テーブルセル</Cell>
-                    <Cell>テーブルセル</Cell>
-                    <Cell>テーブルセル</Cell>
-                    <Cell>テーブルセル</Cell>
-                    <Cell>テーブルセル</Cell>
-                  </Row>
-                </Head>
-                <Body>
-                  <Row>
-                    <Cell>
-                      <TextLink href={'/'}>
-                        <LineUp vAlign="center">
-                          <FaFileIcon />
-                          text
-                        </LineUp>
-                      </TextLink>
-                    </Cell>
-                    <Cell>text</Cell>
-                    <Cell>text</Cell>
-                    <Cell>text</Cell>
-                    <Cell>text</Cell>
-                  </Row>
-                </Body>
-              </Table>
-            </Base>
+            <Stack>
+              <Base>
+                <Table>
+                  <Head>
+                    <Row>
+                      <Cell>id</Cell>
+                      <Cell>名前</Cell>
+                      <Cell>メールアドレス</Cell>
+                      <Cell>website</Cell>
+                      <Cell>操作</Cell>
+                    </Row>
+                  </Head>
+                  <Body>
+                    {isFetching ? (
+                      <SpinnerRow colSpan={5} />
+                    ) : (
+                      posts.map((post: any, index: number) => {
+                        return (
+                          <Row key={index}>
+                            <Cell>{post.id}</Cell>
+                            <Cell>{post.name}</Cell>
+                            <Cell>{post.email}</Cell>
+                            <Cell>{post.company.name}</Cell>
+                            <Cell>
+                              <LineUp vAlign="center" gap={0.5}>
+                                <SecondaryButton size="s" prefix={<FaEditIcon />}>
+                                  編集
+                                </SecondaryButton>
+                                <SecondaryButton size="s" prefix={<FaTrashAltIcon />}>
+                                  削除
+                                </SecondaryButton>
+                              </LineUp>
+                            </Cell>
+                          </Row>
+                        )
+                      })
+                    )}
+                  </Body>
+                </Table>
+              </Base>
+            </Stack>
+            <Stack align={'center'}>
+              <Pagination
+                current={7}
+                total={13}
+                onClick={(number) => {
+                  console.log(number)
+                }}
+              />
+            </Stack>
           </Stack>
         </Stack>
       </Content>
-      <StyledFooter>
-        <LineUp align="space-between" vAlign="center">
-          <p>SmartHR, Inc.</p>
-        </LineUp>
-      </StyledFooter>
+      <Footer />
     </>
   )
 }
-
-const StyledHeader = styled.header(
-  ({ theme: { color, space, width } }) => css`
-    padding: 0 ${space(1.5)};
-    height: fit-content;
-    background-color: ${color.BRAND};
-    color: ${color.TEXT_WHITE};
-    @media (min-width: ${width.CONTENT.MAIN}) {
-      padding-right: ${space(2)};
-      padding-left: ${space(2)};
-    }
-  `,
-)
-
-const NavigationItemWrapper = styled.div(
-  ({ theme: { space } }) =>
-    css`
-      padding: ${space(0.75)} ${space(0.5)};
-    `,
-)
 
 const Div = styled.div<{ zIndex: number }>(
   ({ zIndex }) => css`
@@ -119,18 +120,5 @@ const Base = styled(BaseComponent)(
   ({ theme: { space, radius } }) => css`
     border-radius: ${radius.m};
     overflow: hidden;
-  `,
-)
-
-const StyledFooter = styled.footer(
-  ({ theme: { color, space } }) => css`
-    overflow: hidden;
-    padding: 0 ${space(1.5)};
-    height: fit-content;
-    background-color: ${color.BRAND};
-    p {
-      color: ${color.WHITE};
-      padding: ${space(0.75)} ${space(0.5)};
-    }
   `,
 )

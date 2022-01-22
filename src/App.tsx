@@ -9,9 +9,12 @@ function App() {
           path="/"
           element={
             <>
-              <h1>Hello CodeSandbox</h1>
-              <h2>Start editing to see some magic happen!</h2>
-              <Link to="/collection">About</Link>
+              <h1>SmartHR UI レイアウトサンプル</h1>
+              <ul>
+                <li>
+                  <Link to="/collection">Collection</Link>
+                </li>
+              </ul>
             </>
           }
         />

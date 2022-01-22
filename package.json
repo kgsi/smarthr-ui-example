@@ -1,0 +1,43 @@
+{
+  "name": "smarthr-ui-example",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "run-p lint:*",
+    "lint:eslint": "eslint './**/*.{ts,tsx}'",
+    "lint:style": "stylelint './**/*.{ts,tsx}'"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "smarthr-normalize-css": "^1.0.1",
+    "smarthr-ui": "^17.1.0",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "@types/styled-components": "^5.1.21",
+    "@vitejs/plugin-react": "^1.0.7",
+    "eslint": "^8.7.0",
+    "eslint-config-smarthr": "^6.0.3",
+    "glob": "^7.2.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.2.2",
+    "npm-run-all": "^4.1.5",
+    "postcss-jsx": "^0.36.4",
+    "postcss-syntax": "^0.36.2",
+    "prettier": "^2.5.1",
+    "prettier-config-smarthr": "^1.0.0",
+    "stylelint": "^14.2.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-smarthr": "^1.0.2",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2"
+  }
+}

@@ -81,43 +81,45 @@ export const Collection: React.VFC = () => {
                     </LineUp>
                   </LineUp>
                 </TableHeadNavigation>
-                <Table>
-                  <Head>
-                    <Row>
-                      <Cell>id</Cell>
-                      <Cell>名前</Cell>
-                      <Cell>メールアドレス</Cell>
-                      <Cell>website</Cell>
-                      <Cell>操作</Cell>
-                    </Row>
-                  </Head>
-                  <Body>
-                    {isFetching ? (
-                      <SpinnerRow colSpan={5} />
-                    ) : (
-                      posts.map((post: any, index: number) => {
-                        return (
-                          <Row key={index}>
-                            <Cell>{post.id}</Cell>
-                            <Cell>{post.name}</Cell>
-                            <Cell>{post.email}</Cell>
-                            <Cell>{post.company.name}</Cell>
-                            <Cell>
-                              <LineUp vAlign="center" gap={0.5}>
-                                <SecondaryButton size="s" prefix={<FaEditIcon />}>
-                                  編集
-                                </SecondaryButton>
-                                <SecondaryButton size="s" prefix={<FaTrashAltIcon />}>
-                                  削除
-                                </SecondaryButton>
-                              </LineUp>
-                            </Cell>
-                          </Row>
-                        )
-                      })
-                    )}
-                  </Body>
-                </Table>
+                <TableWrapper>
+                  <Table>
+                    <Head>
+                      <Row>
+                        <Cell>ID</Cell>
+                        <Cell>名前</Cell>
+                        <Cell>メールアドレス</Cell>
+                        <Cell>会社名</Cell>
+                        <Cell>操作</Cell>
+                      </Row>
+                    </Head>
+                    <Body>
+                      {isFetching ? (
+                        <SpinnerRow colSpan={5} />
+                      ) : (
+                        posts.map((post: any, index: number) => {
+                          return (
+                            <Row key={index}>
+                              <Cell>{post.id}</Cell>
+                              <Cell>{post.name}</Cell>
+                              <Cell>{post.email}</Cell>
+                              <Cell>{post.company.name}</Cell>
+                              <Cell>
+                                <LineUp vAlign="center" gap={0.5}>
+                                  <SecondaryButton size="s" prefix={<FaEditIcon />}>
+                                    編集
+                                  </SecondaryButton>
+                                  <SecondaryButton size="s" prefix={<FaTrashAltIcon />}>
+                                    削除
+                                  </SecondaryButton>
+                                </LineUp>
+                              </Cell>
+                            </Row>
+                          )
+                        })
+                      )}
+                    </Body>
+                  </Table>
+                </TableWrapper>
               </Base>
             </Stack>
             <Stack align={'center'}>
@@ -158,9 +160,15 @@ const Content = styled(Div)<{ fullWidth: boolean }>(
 )
 
 const Base = styled(BaseComponent)(
-  ({ theme: { space, radius } }) => css`
+  ({ theme: { radius } }) => css`
     border-radius: ${radius.m};
     overflow: hidden;
+  `,
+)
+
+const TableWrapper = styled('div')(
+  ({ theme: { space } }) => css`
+    overflow-x: scroll;
   `,
 )
 

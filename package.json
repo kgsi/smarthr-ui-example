@@ -31,7 +31,7 @@
     "@types/styled-components": "^5.1.21",
     "@vitejs/plugin-react": "^1.0.7",
     "dummy-json": "^3.0.4",
-    "eslint": "^8.7.0",
+    "eslint": "8.24.0",
     "eslint-config-smarthr": "6.0.5",
     "glob": "^7.2.0",
     "husky": "^7.0.4",
